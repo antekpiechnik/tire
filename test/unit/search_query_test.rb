@@ -262,6 +262,22 @@ module Tire::Search
 
     end
 
+    context "FuzzyLikeThisQuery" do
+
+      should "allow a fuzzy_like_this query" do
+        assert_equal( { :fuzzy_like_this => { :fields => [:a, :b], :like_text => 'bar' } }, Query.new.fuzzy_like_this([:a, :b], 'bar'))
+      end
+
+      should "allow a fuzzy_like_this query on a single field" do
+        assert_equal( { :fuzzy_like_this => { :fields => [:a], :like_text => 'bar' } }, Query.new.fuzzy_like_this(:a, 'bar'))
+      end
+
+      should "allow a fuzzy_like_this query with options" do
+        assert_equal( { :fuzzy_like_this => { :fields => [:a], :like_text => 'bar', :more => :stuff } }, Query.new.fuzzy_like_this(:a, 'bar', :more => :stuff))
+      end
+
+    end
+
     context "BooleanQuery" do
 
       should "not raise an error when no block is given" do

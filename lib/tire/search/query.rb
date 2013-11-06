@@ -58,6 +58,15 @@ module Tire
         @value = { :fuzzy => query }
       end
 
+      def fuzzy_like_this(field_or_fields, value, options={})
+        @value = {
+          :fuzzy_like_this => {
+            :fields => Array(field_or_fields),
+            :like_text => value
+          }.update(options)
+        }
+      end
+
       def boolean(options={}, &block)
         @boolean ||= BooleanQuery.new(options)
         block.arity < 1 ? @boolean.instance_eval(&block) : block.call(@boolean) if block_given?
